@@ -1,0 +1,14 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Environment & secrets
+.env
+
+
+
+
+
+# Temporary files
+*.log

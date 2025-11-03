@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width-device-width,initial-scale=1.0"/>
+        <title>AI Job Coach Assistant</title>
+        <link rel="stylesheet" href="style.css"/>
+
+    </head>
+    <body>
+        <div class="container">
+            <h1>AI Job Coach Assistant</h1>
+            <p>Get career advice,interview questions ,and resume tips instantly.</p>
+            <div class="form">
+                <label>Career Role</label>
+                <input type="text" id="role" placeholder="e.g Data Analyst"/>
+                <label>Tone</label>
+                <select id="tone">
+                    <option value="motivational">Motivational</option>
+                    <option value="formal">Formal</option>
+                    <option value="casual">Casual</option>
+                </select>
+                <label>Prompt Type</label>
+                <select id="choice">
+                    <option value="1">Career Advice</option>
+                    <option value="2">Interview Questions</option>
+                    <option value="3">Resume Tips</option>
+                </select>
+                <div class="form-section">
+                 <label for="resume" class="resume-label">
+                Upload your resume <span class="optional-text">(for a more personalized response ✨)</span>:
+                 </label>
+                <input type="file" id="resume" accept=".pdf,.docx" />
+                <p class="resume-hint">📄 Please upload your resume for a better user experience.</p>
+                </div>
+
+
+                <button id="generateBtn">Generate Response</button>
+            </div>
+            <div id="resumePreviewSection" style="display: none;">
+            <h3>🧾 Resume Extract Preview</h3>
+             <pre id="resumePreview"></pre>
+            </div>
+
+            <div class="output-box">
+                <h2>AI Response</h2>
+                <pre id="output"></pre>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
