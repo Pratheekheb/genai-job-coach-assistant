@@ -2,7 +2,10 @@ from openai import OpenAI
 from dotenv import load_dotenv,find_dotenv
 import os,json
 from template import CAREER_ADVICE_PROMPT,INTERVIEW_QUESTIONS_PROMPT,RESUME_TIPS_PROMPT
-load_dotenv(find_dotenv("../.env"))
+dot_env_path=find_dotenv("../.env")
+if dot_env_path:
+    load_dotenv(dot_env_path)
+
 client=OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 def generate_prompt(template,**kwargs):
     return template.format(**kwargs)
