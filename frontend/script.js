@@ -1,4 +1,4 @@
-const apiUrl="http://127.0.0.1:8000/api/generate";
+const apiUrl="https://genai-job-coach-assistant-2.onrender.com/api/generate";
 const generateBtn=document.getElementById("generateBtn");
 const outputBox=document.getElementById("output")
 generateBtn.addEventListener("click",async()=>{
