@@ -1,52 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width-device-width,initial-scale=1.0"/>
-        <title>AI Job Coach Assistant</title>
-        <link rel="stylesheet" href="style.css"/>
 
-    </head>
-    <body>
-        <div class="container">
-            <h1>AI Job Coach Assistant</h1>
-            <p>Get career advice,interview questions ,and resume tips instantly.</p>
-            <div class="form">
-                <label>Career Role</label>
-                <input type="text" id="role" placeholder="e.g Data Analyst"/>
-                <label>Tone</label>
-                <select id="tone">
-                    <option value="motivational">Motivational</option>
-                    <option value="formal">Formal</option>
-                    <option value="casual">Casual</option>
-                </select>
-                <label>Prompt Type</label>
-                <select id="choice">
-                    <option value="1">Career Advice</option>
-                    <option value="2">Interview Questions</option>
-                    <option value="3">Resume Tips</option>
-                </select>
-                <div class="form-section">
-                 <label for="resume" class="resume-label">
-                Upload your resume <span class="optional-text">(for a more personalized response ✨)</span>:
-                 </label>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width-device-width,initial-scale=1.0" />
+    <title>AI Job Coach Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+
+        .container {
+            background: #1e1e1e;
+            border-radius: 16px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+            padding: 40px 50px;
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 0 35px rgba(0, 255, 255, 0.3);
+        }
+
+        h1 {
+            color: #00ffff;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+
+        label {
+            display: block;
+            text-align: left;
+            font-weight: 600;
+            color: #ccc;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 5px #00ffff;
+        }
+
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00ffff, #007bff);
+            border: none;
+            border-radius: 8px;
+            color: #111;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #00b3b3, #0056b3);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+
+        .output-box {
+            margin-top: 30px;
+            background: #121212;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            border: 1px solid #2e2e2e;
+        }
+
+        .output-box h2 {
+            color: #00ffff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+
+        pre {
+            background: #000;
+            color: #00ff99;
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            border: 1px solid #333;
+            box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+
+
+        button,
+        input,
+        select {
+            transition: all 0.3s ease-in-out;
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        /* Resume upload section styling */
+        .resume-label {
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .optional-text {
+            font-weight: normal;
+            font-size: 0.9em;
+            color: #9aa0a6;
+        }
+
+        #resume {
+            margin-top: 8px;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #resume:hover {
+            background-color: #2a2a2a;
+        }
+
+        .resume-hint {
+            font-size: 0.9em;
+            color: #aaaaaa;
+            margin-top: 6px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>AI Job Coach Assistant</h1>
+        <p>Get career advice,interview questions ,and resume tips instantly.</p>
+        <div class="form">
+            <label>Career Role</label>
+            <input type="text" id="role" placeholder="e.g Data Analyst" />
+            <label>Tone</label>
+            <select id="tone">
+                <option value="motivational">Motivational</option>
+                <option value="formal">Formal</option>
+                <option value="casual">Casual</option>
+            </select>
+            <label>Prompt Type</label>
+            <select id="choice">
+                <option value="1">Career Advice</option>
+                <option value="2">Interview Questions</option>
+                <option value="3">Resume Tips</option>
+            </select>
+            <div class="form-section">
+                <label for="resume" class="resume-label">
+                    Upload your resume <span class="optional-text">(for a more personalized response ✨)</span>:
+                </label>
                 <input type="file" id="resume" accept=".pdf,.docx" />
                 <p class="resume-hint">📄 Please upload your resume for a better user experience.</p>
-                </div>
-
-
-                <button id="generateBtn">Generate Response</button>
-            </div>
-            <div id="resumePreviewSection" style="display: none;">
-            <h3>🧾 Resume Extract Preview</h3>
-             <pre id="resumePreview"></pre>
             </div>
 
-            <div class="output-box">
-                <h2>AI Response</h2>
-                <pre id="output"></pre>
-            </div>
+
+            <button id="generateBtn">Generate Response</button>
         </div>
-        <script src="script.js"></script>
-    </body>
+        <div id="resumePreviewSection" style="display: none;">
+            <h3>🧾 Resume Extract Preview</h3>
+            <pre id="resumePreview"></pre>
+        </div>
+
+        <div class="output-box">
+            <h2>AI Response</h2>
+            <pre id="output"></pre>
+        </div>
+    </div>
+    <script>const apiUrl = "http://127.0.0.1:8000/api/generate";
+        const generateBtn = document.getElementById("generateBtn");
+        const outputBox = document.getElementById("output")
+        generateBtn.addEventListener("click", async () => {
+            const role = document.getElementById("role").value.trim();
+            const tone = document.getElementById("tone").value;
+            const choice = Number(document.getElementById("choice").value)
+            const resumeFile = document.getElementById("resume").files[0];
+            if (!role) {
+                alert("Please enter a career role!");
+                return;
+            }
+            outputBox.textContent = "Generating... Please wait ";
+            generateBtn.disabled = true;
+            generateBtn.textContent = "Generating...";
+            try {
+                let response;
+                if (resumeFile) {
+                    const formData = new FormData();
+                    formData.append("role", role);
+                    formData.append("tone", tone);
+                    formData.append("choice", choice);
+                    formData.append("resume", resumeFile);
+                    response = await fetch(apiUrl, {
+                        method: "POST",
+                        body: formData,
+                    });
+                }
+                else {
+                    response = await fetch(apiUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+
+                        },
+                        body: JSON.stringify({ role, tone, choice })
+                    });
+                }
+                if (!response.ok) {
+                    const errText = await response.text();
+                    outputBox.textContent = `Error :${errText}`
+                    return
+                }
+                const data = await response.json();
+                let finalOutput = "";
+                if (data.result) {
+                    finalOutput = JSON.stringify(data.result, null, 2);
+                }
+                else {
+                    finalOutput = JSON.stringify(data, null, 2);
+                }
+                if (data.resume_preview) {
+                    const previewSection = document.getElementById("resumePreviewSection");
+                    const previewBox = document.getElementById("resumePreview");
+                    previewBox.textContent = data.resume_preview;
+                    previewSection.style.display = "block";
+                }
+
+                outputBox.textContent = "";
+                await typeEffect(finalOutput, outputBox);
+            }
+            catch (error) {
+                outputBox.textContent = `Error :${error.message}`;
+
+            }
+            finally {
+                generateBtn.disabled = false;
+                generateBtn.textContent = "Generate Response"
+            }
+        });
+        async function typeEffect(text, element, speed = 10) {
+            for (let i = 0; i < text.length; i++) {
+                element.textContent += text.charAt(i);
+                await new Promise(resolve => setTimeout(resolve, speed));
+            }
+
+        }</script>
+</body>
+
 </html>
