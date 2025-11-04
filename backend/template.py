@@ -31,7 +31,7 @@ If a resume is provided below, review it carefully and tailor your advice to str
 Respond Only in this Json format:
 {{
     "role":{role}",
-    "resume_tips":["tip1","tip2","tipe3"]
+    "resume_tips":["tip1","tip2","tip3"]
 
 }}
 """
